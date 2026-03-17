@@ -18,3 +18,8 @@ def feedback(request):
     user_feed = EmailHandler(feed=feed,name=name,email=email)
     return JsonResponse(user_feed.status_email(), safe=False)
 # Create your views here.
+
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("<h1>Adwa AI Backend is Live!</h1>")
