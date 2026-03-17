@@ -1,4 +1,4 @@
-Django>=6.0.3
+Django>=5.2  # Using 5.2 for better compatibility with 3.12
 gunicorn
 whitenoise
 dj-database-url
@@ -7,4 +7,6 @@ django-cors-headers
 google-generativeai
 chromadb
 langchain-community
+langchain-chroma
+langchain-google-genai
 requests
