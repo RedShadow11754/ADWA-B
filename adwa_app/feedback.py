@@ -1,20 +1,32 @@
 import smtplib
-import dotenv
 import os
 
-dotenv.load_dotenv()
-email_psd = os.getenv("EMAIL_PSD")
-
 class EmailHandler:
-    def __init__(self,feed,name,email="No Email"):
+    def __init__(self, feed, name, email="No Email"):
         self.status = "Failed"
-        with smtplib.SMTP("smtp.gmail.com") as connection:
-            connection.starttls()
-            connection.login("abelalex530@gmail.com",email_psd )
-            connection.sendmail(from_addr="abelalex530@gmail.com", to_addrs="abelalex122129@gmail.com",
-                                msg=f"Subject:From: {name}\nEmail{email} \n\n\n{feed}")
-            connection.close()
-            self.status = "Success"
+        # We get the password directly from Render's Environment Variables
+        email_psd = os.environ.get("EMAIL_PSD")
+        sender_email = "abelalex530@gmail.com"
+        receiver_email = "abelalex122129@gmail.com"
+
+        try:
+            # 1. Added port 587 and a 10-second timeout
+            with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as connection:
+                connection.starttls()
+                connection.login(sender_email, email_psd)
+                
+                # 2. Simplified message formatting
+                message = f"Subject: New Feedback from {name}\n\nName: {name}\nEmail: {email}\n\nMessage:\n{feed}"
+                
+                connection.sendmail(
+                    from_addr=sender_email, 
+                    to_addrs=receiver_email,
+                    msg=message.encode('utf-8') # Added encoding for safety
+                )
+                self.status = "Success"
+        except Exception as e:
+            print(f"SMTP Error: {e}")
+            self.status = f"Failed: {str(e)}"
 
     def status_email(self):
-        return {"status":self.status}
+        return {"status": self.status}
