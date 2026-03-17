@@ -5,7 +5,7 @@ import time
 import os
 import dotenv
 
-dotenv.load_dotenv()
+#dotenv.load_dotenv()
 
 gemini_api = os.getenv("GEMINI_API_KEY")
 
