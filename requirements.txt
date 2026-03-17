@@ -1,4 +1,4 @@
-Django>=5.2  # Using 5.2 for better compatibility with 3.12
+Django>=5.2
 gunicorn
 whitenoise
 dj-database-url
@@ -9,4 +9,6 @@ chromadb
 langchain-community
 langchain-chroma
 langchain-google-genai
+langchain-huggingface
+sentence-transformers
 requests
